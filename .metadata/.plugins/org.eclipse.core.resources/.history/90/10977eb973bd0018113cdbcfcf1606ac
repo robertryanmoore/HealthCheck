@@ -1,0 +1,17 @@
+import javax.swing.JOptionPane;
+
+public class Test {
+
+	public static void main(String[] args) {
+		Chrome chrome = new Chrome();
+		//chrome.healthCheck();
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Test");
+	}
+
+}

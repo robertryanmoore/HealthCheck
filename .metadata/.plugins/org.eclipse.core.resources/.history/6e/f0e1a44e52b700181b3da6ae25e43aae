@@ -1,0 +1,8 @@
+
+public class EmailUtil {
+
+	public EmailUtil() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

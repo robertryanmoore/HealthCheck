@@ -1,0 +1,62 @@
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import microsoft.exchange.webservices.data.core.ExchangeService;
+import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
+import microsoft.exchange.webservices.data.core.enumeration.property.WellKnownFolderName;
+import microsoft.exchange.webservices.data.core.service.item.EmailMessage;
+import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
+import microsoft.exchange.webservices.data.credential.WebCredentials;
+import microsoft.exchange.webservices.data.property.complex.FolderId;
+import microsoft.exchange.webservices.data.property.complex.Mailbox;
+import microsoft.exchange.webservices.data.property.complex.MessageBody;
+
+public class MSExchangeEmailService {
+  
+	
+	
+	public static void main(String[] args){
+		
+		System.out.println("working");
+		
+		ExchangeService mailService = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
+		ExchangeCredentials credentials = new WebCredentials("rmoore@oldmutual.com", "SeptPass!8");
+		System.setProperty("javax.net.debug", "ssl");
+		
+		mailService.setCredentials(credentials);
+		try {
+			//mailService.autodiscoverUrl("rmoore@oldmutual.com");
+			mailService.setUrl(new URI("https://mail.oldmutual.com/EWS/Exchange.asmx"));
+		} catch (URISyntaxException e1) {
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//mailService.setTimeout(30000);
+		
+		try {
+			System.out.println("Try to send email");
+			EmailMessage em = new EmailMessage(mailService);
+			microsoft.exchange.webservices.data.property.complex.EmailAddress me = new microsoft.exchange.webservices.data.property.complex.EmailAddress();
+			me.setAddress("rmoore@oldmutual.com");
+			em.setFrom(me);
+			em.setSubject("QA health check");
+			em.setBody(new MessageBody("This is a test email"));
+			em.getToRecipients().add(me);
+			em.getBccRecipients().clear();
+			em.getCcRecipients().clear();
+			FolderId id = new FolderId(WellKnownFolderName.Outbox, Mailbox.getMailboxFromString(""));
+			em.sendAndSaveCopy(id);
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		
+        }
+}

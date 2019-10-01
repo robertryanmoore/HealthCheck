@@ -1,0 +1,19 @@
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+
+public class Tray {
+	
+	public static void main(String args[]){
+		
+		if (!SystemTray.isSupported()) {
+            System.out.println("SystemTray is not supported");
+            return;
+        }
+		
+		PopupMenu menu = new PopupMenu("Menu");
+	    MenuItem menuItem1 = new MenuItem("Open");
+		
+	}
+}
+	

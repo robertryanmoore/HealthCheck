@@ -1,0 +1,8 @@
+
+public class SimpleMail {
+
+	public SimpleMail() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

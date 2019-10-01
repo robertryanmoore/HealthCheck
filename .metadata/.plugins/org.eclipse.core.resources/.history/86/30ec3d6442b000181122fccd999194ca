@@ -1,0 +1,57 @@
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Scanner;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class Chrome {
+
+	public static void main(String[] args) {
+
+		// try connect to site https://secure.dcc.oldmutual.co.za.qas/omlogin.aspx?resource_url=https%3A%2F%2Fsecure.oldmutual.co.za.qas%252F
+		
+		try {
+			URL url=new URL("https://secure.dcc.oldmutual.co.za.qas/omlogin.aspx?resource_url=https%3A%2F%2Fsecure.oldmutual.co.za.qas%252F");
+			URLConnection con=url.openConnection();
+			con.getInputStream();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			System.exit(0);
+		}
+		
+		System.out.println("Great success");
+		// Tell the program where to find the Chrome driver and create the web driver
+		System.setProperty("webdriver.chrome.driver", "C:/Code/Java/selenium-java-3.14.0/chromedriver.exe");
+
+		WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments("--start-maximized"));
+		
+
+		// load up the site
+		driver.get("https://secure.dcc.oldmutual.co.za.qas/omlogin.aspx?resource_url=https%3A%2F%2Fsecure.oldmutual.co.za.qas%252F");
+		// inject the username and password
+		driver.findElement(By.id("username")).sendKeys("iamqatest09");
+		driver.findElement(By.id("LoginPassword")).sendKeys("Holiday0!");
+
+		driver.findElement(By.id("login")).click(); // click the login button
+
+		// goes to myport
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(By.cssSelector("a[href='/home/gotomyportfolio']")));
+
+		// tech error detection will go here
+
+		// log out
+		driver.findElement(By.linkText("LOGOUT")).click();
+
+		Scanner keyb = new Scanner(System.in);
+		int yes = keyb.nextInt();
+
+		driver.close();
+	}
+
+}

@@ -1,0 +1,29 @@
+import java.awt.*;
+import javax.swing.*; 
+
+
+public class Settings {
+	
+	private static void createWindow() {
+		
+		JFrame frame = new JFrame("Settings"); 
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //change this to CANCEl_ON_CLOSE later
+		frame.setSize(300, 600);
+		
+		JLabel path = new JLabel("Log path: ");
+		path.setBounds(0, 0, 290, 590);
+	
+		
+		frame.add(path);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	} 
+	
+	public static void main(String args[]){
+		
+		createWindow();
+		
+	}
+	
+
+}

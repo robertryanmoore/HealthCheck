@@ -1,0 +1,67 @@
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Scanner;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class Chrome {
+
+	public static void main(String[] args) {
+
+		Logger logger = new Logger();
+		
+		System.out.println(canConnect());
+		
+		if (!canConnect()) {
+			logger.log("Unable to reach secure.dcc.oldmutual.co.za.qas");
+			
+			System.exit(0);
+		}
+
+		// Tell the program where to find the Chrome driver
+		System.setProperty("webdriver.chrome.driver", "C:/Code/Java/selenium-java-3.14.0/chromedriver.exe");
+
+		WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments("--start-maximized"));
+
+		// load up the site
+		driver.get("https://secure.dcc.oldmu.co.za.qas/omlogin.aspx?resource_url=https%3A%2F%2Fsecure.oldmutual.co.za.qas%252F");
+		
+		try {
+			// inject the username and password
+			driver.findElement(By.id("username")).sendKeys("iamqatest09");
+			driver.findElement(By.id("LoginPassword")).sendKeys("Holiday0!");
+
+			driver.findElement(By.id("login")).click(); // click the login button
+		} catch (Exception e) {
+			logger.log("Unable to log in");
+			System.exit(0);
+		}
+
+		// goes to myport
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();",driver.findElement(By.cssSelector("a[href='/home/gotomyportfolio']")));
+
+		// tech error detection will go here
+
+		// log out
+		driver.findElement(By.linkText("LOGOUT")).click();
+
+		driver.close();
+	}
+
+	public static boolean canConnect() {
+		Boolean canConnect = false;
+		try {
+			canConnect = InetAddress.getByName("www.google.com").isReachable(30);
+		} catch (Exception e) {
+		  canConnect = false;
+		}
+		
+		return canConnect;
+	}
+
+}

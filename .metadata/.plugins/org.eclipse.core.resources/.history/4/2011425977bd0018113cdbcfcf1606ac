@@ -1,0 +1,18 @@
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
+public class Test {
+
+	public static void main(String[] args) throws InterruptedException {
+		Chrome chrome = new Chrome();
+		//chrome.healthCheck();
+
+		Thread.sleep(5000);
+		
+		JOptionPane pane = new JOptionPane();  
+		JDialog dialog = pane.createDialog("Hi there!");  
+		dialog.setAlwaysOnTop(true);  
+		dialog.show();  
+	}
+
+}

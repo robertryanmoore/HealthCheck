@@ -1,0 +1,56 @@
+import static org.quartz.JobBuilder.newJob;
+
+import org.quartz.CronScheduleBuilder;
+import org.quartz.CronTrigger;
+import org.quartz.Job;
+import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SchedulerFactory;
+import org.quartz.TriggerBuilder;
+public class Quarts {
+
+	public static void main(String[] args) throws SchedulerException {
+
+		SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
+
+		Scheduler sched = schedFact.getScheduler();
+
+		sched.start();
+
+		// define the job and tie it to our HelloJob class
+		JobDetail job = newJob(HelloJob.class).withIdentity("myJob", "group1").build();
+
+		//"0 20 11 ? * MON-FRI"
+		
+		//set up triggers 
+		CronTrigger morningTrigger = TriggerBuilder.newTrigger()
+				  .withIdentity("morningTrigger", "group1")
+				  .withSchedule(CronScheduleBuilder.cronSchedule("0 47 11 ? * MON-FRI"))
+				  .forJob("myJob", "group1")
+				  .build();
+		
+		CronTrigger middayTrigger = TriggerBuilder.newTrigger()
+				  .withIdentity("middayTrigger", "group1")
+				  .withSchedule(CronScheduleBuilder.cronSchedule("10 47 11 ? * MON-FRI"))
+				  .forJob("myJob", "group1")
+				  .build();
+		
+		CronTrigger afternoonTrigger = TriggerBuilder.newTrigger()
+				  .withIdentity("afternoonTrigger", "group1")
+				  .withSchedule(CronScheduleBuilder.cronSchedule("15 47 11 ? * MON-FRI"))
+				  .forJob("myJob", "group1")
+				  .build();
+		
+		
+		// Tell quartz to schedule the job using our trigger
+		sched.addJob(job, true,true);
+	    sched.scheduleJob(morningTrigger);
+	    sched.scheduleJob(middayTrigger);
+	    sched.scheduleJob(afternoonTrigger);
+		
+	}
+
+}

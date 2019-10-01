@@ -1,0 +1,71 @@
+import java.text.ParseException;
+
+import org.quartz.CronTrigger;
+import org.quartz.Job;
+import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SchedulerFactory;
+import org.quartz.impl.StdSchedulerFactory;
+
+public class QuartzTesting implements Job {
+
+	/** The sched fact. */
+	private static SchedulerFactory schedFact = new StdSchedulerFactory();
+
+	/** The sched. */
+	private static Scheduler sched;
+
+	static {
+		try {
+			sched = schedFact.getScheduler();
+		} catch (SchedulerException e) {
+			System.out.println("Exception in static block of QuartzTesting class, Exiting the program " + e);
+			System.exit(-1);
+		}
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+
+		try {
+			// start the scheduler
+			sched.start();
+
+			// Create the JobDetail object and the CronTrigger
+			JobDetail jobDetail = new JobDetail("Name", "Group", QuartzTesting.class);
+
+			CronTrigger trigger = new CronTrigger("Name", "Group");
+
+			// Set the CRON expression as per the desired frequency
+			trigger.setCronExpression("*/10 * * * * ?");
+
+			// schedule the job
+			sched.scheduleJob(jobDetail, trigger);
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+	}
+
+	public void execute(JobExecutionContext cntxt) throws JobExecutionException {
+
+		try {
+			// insert the code here that needs to be performed at the intervals
+			// scheduled using CRON trigger
+			// like making a Webservice call or running a report etc.
+			System.out.println("Running the code in the execute method");
+		} catch (Exception ex) {
+			System.out.println("Exception occured in execute method " + ex);
+		}
+
+	}
+}

@@ -1,0 +1,36 @@
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+public class TimerDemo {
+   public static void main(String[] args) {
+      // creating timer task, timer
+      TimerTask tasknew = new TimerTask() {
+		
+		@Override
+		public void run() {
+			System.out.println("working on");     
+			
+		}
+	};
+	
+	
+      Timer timer = new Timer();
+      
+      Calendar calendar = Calendar.getInstance();
+      calendar.set(Calendar.HOUR_OF_DAY, 14);
+      calendar.set(Calendar.MINUTE, 37);
+      calendar.set(Calendar.SECOND, 0);
+      Date time = calendar.getTime();
+     
+      
+      // scheduling the task
+      timer.schedule(tasknew, time);      
+   }
+   // this method performs the task
+   
+   public void run() {
+      System.out.println("working on");      
+   }    
+}

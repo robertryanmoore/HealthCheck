@@ -1,0 +1,4 @@
+backup created 11/09/2018
+-logs into QA
+-checks for tech errors
+-writes results to text file

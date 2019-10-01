@@ -1,0 +1,29 @@
+import java.awt.Image;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
+import java.net.URL;
+
+public class Tray {
+
+	public static void main(String args[]) {
+
+		if (!SystemTray.isSupported()) {
+			System.out.println("SystemTray is not supported");
+			return;
+		}
+
+		PopupMenu menu = new PopupMenu();
+		menu.addSeparator();
+		URL url = getClass().getResource("/images/futuresonic-21.png");
+		Image image = Toolkit.getDefaultToolkit().createImage(url);
+		TrayIcon trayIcon = new TrayIcon(image, "FutureSonic Music Streamer", menu);
+		trayIcon.setImageAutoSize(false);
+		try {
+			SystemTray.getSystemTray().add(trayIcon);
+		} catch (Throwable x) {
+			Sys
+	}
+
+	}

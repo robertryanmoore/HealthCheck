@@ -1,0 +1,30 @@
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+
+public class Test {
+
+	public static void main(String[] args) throws InterruptedException {
+		
+		
+		Object[] options = {"OK", "Copy"};
+		
+		JOptionPane pane = new JOptionPane();
+		pane.setMessage("HIIIIIIIIIIIIIIIIII");
+		pane.setMessageType(0);
+		pane.setOptions(options);
+		JDialog dialog = pane.createDialog("Title");
+		dialog.setAlwaysOnTop(true);  
+		//dialog.setVisible(true);
+		
+		int response = JOptionPane.showConfirmDialog(dialog,"Message", "Title", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		
+		
+		
+		  
+	}
+	
+
+
+}

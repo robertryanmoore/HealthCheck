@@ -1,0 +1,71 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.Charset;
+
+import javax.xml.registry.infomodel.EmailAddress;
+import javax.xml.rpc.ServiceException;
+
+import com.google.common.util.concurrent.Service;
+import com.sun.corba.se.impl.ior.ByteBuffer;
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+
+import microsoft.exchange.webservices.data.core.ExchangeService;
+import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
+import microsoft.exchange.webservices.data.core.response.FindItemResponse;
+import microsoft.exchange.webservices.data.core.service.item.EmailMessage;
+import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
+import microsoft.exchange.webservices.data.credential.WebCredentials;
+import microsoft.exchange.webservices.data.property.complex.ItemId;
+import microsoft.exchange.webservices.data.property.complex.Mailbox;
+import microsoft.exchange.webservices.data.property.complex.MessageBody;
+
+public class MSExchangeEmailService {
+  
+	
+	
+	public static void main(String[] args){
+		
+		System.out.println("working");
+		
+		ExchangeService mailService = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
+		ExchangeCredentials credentials = new WebCredentials("rmoore@oldmutual.com", "SeptPass!8");
+		System.setProperty("javax.net.debug", "ssl");
+		
+		mailService.setCredentials(credentials);
+		try {
+		//	mailService.setUrl(new URI("https://outlook.office365.com/ews/exchange.asmx"));
+			mailService.autodiscoverUrl("rmoore@oldmutual.com");
+			//mailService.setUrl(new URI("https://mail.oldmutual.com/EWS/Exchange.asmx"));
+		} catch (URISyntaxException e1) {
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//mailService.setTimeout(30000);
+		
+		try {
+			System.out.println("Try to send email");
+			EmailMessage em = new EmailMessage(mailService);
+			microsoft.exchange.webservices.data.property.complex.EmailAddress me = new microsoft.exchange.webservices.data.property.complex.EmailAddress();
+			me.setAddress("rmoore@oldmutual.com");
+			em.setFrom(me);
+			em.setSubject("QA health check");
+			em.setBody(new MessageBody("This is a test email"));
+			em.getToRecipients().add(me);
+			em.sendAndSaveCopy();
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		
+        }
+}

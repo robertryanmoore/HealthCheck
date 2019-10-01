@@ -1,0 +1,22 @@
+import static org.quartz.JobBuilder.newJob;
+
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+
+import org.quartz.CronScheduleBuilder;
+import org.quartz.CronTrigger;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SchedulerFactory;
+import org.quartz.TriggerBuilder;
+public class Quarts {
+
+	public static void main(String[] args) throws SchedulerException {
+		
+		
+		
+	}
+
+}

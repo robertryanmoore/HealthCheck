@@ -1,0 +1,27 @@
+import java.util.Scanner;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Chrome {
+
+	public static void main(String[] args) {
+		
+		System.setProperty("webdriver.chrome.driver", "C:/Code/Java/selenium-java-3.14.0/chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		
+		driver.get("https://secure.dcc.oldmutual.co.za.qas/omlogin.aspx?resource_url=https%3A%2F%2Fsecure.oldmutual.co.za.qas%252F");
+		WebElement  userName=  driver.findElement(By.id("username"));
+		userName.sendKeys("iamqatest09");
+		
+		WebElement  password =  driver.findElement(By.id("LoginPassword"));
+		userName.sendKeys("Holiday0!");
+		
+		Scanner keyb = new Scanner(System.in);
+		int yes = keyb.nextInt();
+		
+		driver.close();
+	}
+
+}

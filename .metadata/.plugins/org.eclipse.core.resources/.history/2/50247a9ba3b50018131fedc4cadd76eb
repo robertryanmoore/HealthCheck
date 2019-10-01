@@ -1,0 +1,102 @@
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class Chrome {
+
+	public static void main(String[] args) {
+
+		Logger logger = new Logger();
+		List<String> message = new ArrayList<String>();
+
+		// Tell the program where to find the Chrome driver
+		System.setProperty("webdriver.chrome.driver", "C:/Code/Java/selenium-java-3.14.0/chromedriver.exe");
+
+		WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments("--start-maximized"));
+		
+		// load up the site  "https://secure.dcc.oldmutual.co.za.qas/omlogin.aspx?resource_url=https%3A%2F%2Fsecure.oldmutual.co.za.qas%252F");
+		driver.get(
+				"https://secure.pp.dcc.oldmutual.co.za.qas/omlogin.aspx?resource_url=https%3A%2F%2Fsecure.pp.oldmutual.co.za.qas%252F");
+
+		// Login
+		try {
+			// inject the username and password
+			driver.findElement(By.id("username")).sendKeys("iamqatest09");
+			driver.findElement(By.id("LoginPassword")).sendKeys("Holiday0!");
+
+			driver.findElement(By.id("login")).click(); // click the login button
+														
+		} catch (Exception e) {
+			message.add("Unable to click through to MyPortfolio");
+			logger.log(message);
+			driver.close();
+			System.exit(0);
+		}
+		
+		message.add("Login successful");
+		
+		// tech error detection will go here
+		
+				if (driver.getPageSource().contains("<strong>More details about the error</strong>")) {
+					
+					int errorStart = driver.getPageSource().lastIndexOf("ml15 noMarginBottom"); //+ 19
+					System.out.println(driver.getPageSource().substring(errorStart+21, 6502));
+				}
+		
+
+		// try to click on myport
+		try {
+			// goes to myport
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();",driver.findElement(By.cssSelector("a[href='/home/gotomyportfolio']")));
+
+		} catch (Exception e) {
+			message.add("Unable to click through to MyPortfolio");
+			//driver.close();
+			System.exit(0);
+		}
+		
+		message.add("My Portfolio loaded successfully");
+		
+		
+		
+
+		// log out
+		
+		try {
+			driver.findElement(By.linkText("LOGOUT")).click();
+		} catch (Exception e) {
+
+			message.add("Unable to click on logout");
+			driver.close();
+			System.exit(0);
+		}
+
+		boolean pageChanged = false;
+		
+		while (pageChanged == false) {
+
+			if (!driver.getPageSource().contains("Your Car & Home Insurance")) {
+				pageChanged = true;
+			}
+			
+		}
+			
+		if (driver.getPageSource().contains("You have been <strong>logged out</strong>")) {
+			
+			message.add("IAM QA health check completed successfully"); 
+	
+		} else {
+		
+			message.add("Error logging out");
+		
+		}
+
+		logger.log(message);
+		driver.close();
+	}	
+}

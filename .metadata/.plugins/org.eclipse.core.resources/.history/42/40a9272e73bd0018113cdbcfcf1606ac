@@ -1,0 +1,12 @@
+import javax.swing.JOptionPane;
+
+public class Test {
+
+	public static void main(String[] args) {
+		Chrome chrome = new Chrome();
+		chrome.healthCheck();
+		
+		JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Test");
+	}
+
+}

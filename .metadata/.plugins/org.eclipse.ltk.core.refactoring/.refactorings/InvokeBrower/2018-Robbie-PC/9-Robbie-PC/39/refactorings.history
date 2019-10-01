@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;Emailer.java&apos; to &apos;MSExchangeEmailService.java&apos;&#x0D;&#x0A;- Original project: &apos;InvokeBrower&apos;&#x0D;&#x0A;- Original element: &apos;Emailer.java&apos;&#x0D;&#x0A;- Renamed element: &apos;MSExchangeEmailService.java&apos;" description="Rename compilation unit &apos;Emailer.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;{Emailer.java" name="MSExchangeEmailService.java" references="false" stamp="1538041414811" version="1.0"/>
+</session>

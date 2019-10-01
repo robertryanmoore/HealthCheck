@@ -1,0 +1,63 @@
+import java.net.URI;
+import java.util.Calendar;
+import java.util.List;
+
+import microsoft.exchange.webservices.data.core.ExchangeService;
+import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
+import microsoft.exchange.webservices.data.core.service.item.EmailMessage;
+import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
+import microsoft.exchange.webservices.data.credential.WebCredentials;
+import microsoft.exchange.webservices.data.property.complex.MessageBody;
+import sun.print.resources.serviceui;
+
+public class MSExchangeEmailService {
+  
+	ExchangeService mailService = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
+	ExchangeCredentials credentials = new WebCredentials("rmoore@oldmutual.com", "SeptPass!8");
+	
+	public static void main(String[] args)
+    {
+        try
+        {
+            Service service = new Service("https://myserver/ews/Exchange.asmx", "username", "password");
+
+            ItemShape itemShape = new ItemShape(ShapeType.ID);
+
+            FindItemResponse response = service.findItem(StandardFolder.INBOX, itemShape);
+
+            for (int i = 0; i < response.getItems().size(); i++)
+            {
+                ItemId itemId = response.getItems().get(i).getItemId();
+
+                Message message = service.getMessage(itemId);
+
+                String mimeContent = message.getMimeContent().getText();
+
+                Charset charset = Charset.forName("UTF-8");
+
+                ByteBuffer byteBuffer = charset.encode(mimeContent);
+
+                byte[] buffer = new byte[byteBuffer.limit()];
+
+                System.arraycopy(byteBuffer.array(), 0, buffer, 0, buffer.length);
+
+                String fileName = "c:\\test\\message" + i + ".eml";
+
+                FileOutputStream fileStream = new FileOutputStream(fileName);
+                fileStream.write(buffer);
+                fileStream.close();
+            }
+        }
+        catch (ServiceException e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println(e.getXmlMessage());
+
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+}

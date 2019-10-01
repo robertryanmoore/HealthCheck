@@ -1,0 +1,33 @@
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+public class TimerDemo {
+   public static void main(String[] args) {
+      // creating timer task, timer
+      TimerTask tasknew = new TimerTask() {
+		
+		@Override
+		public void run() {
+			System.out.println("working on");     
+			
+		}
+	};
+	
+	
+      Timer timer = new Timer();
+      
+      DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+      LocalDateTime now = LocalDateTime.now();
+      Date date = new Date("HH:mm:ss");
+      
+      // scheduling the task
+      timer.schedule(tasknew, date);      
+   }
+   // this method performs the task
+   
+   public void run() {
+      System.out.println("working on");      
+   }    
+}

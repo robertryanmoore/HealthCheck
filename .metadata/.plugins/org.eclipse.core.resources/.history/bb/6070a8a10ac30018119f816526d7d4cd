@@ -1,0 +1,23 @@
+import java.net.URI;
+import java.util.Calendar;
+import java.util.List;
+
+import microsoft.exchange.webservices.data.core.ExchangeService;
+import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
+import microsoft.exchange.webservices.data.core.service.item.EmailMessage;
+import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
+import microsoft.exchange.webservices.data.credential.WebCredentials;
+import microsoft.exchange.webservices.data.property.complex.MessageBody;
+import sun.print.resources.serviceui;
+
+public class MSExchangeEmailService {
+  
+	ExchangeService mailService = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
+	ExchangeCredentials credentials = new WebCredentials("rmoore@oldmutual.com", "SeptPass!8");
+	
+	
+
+	
+	
+	
+}

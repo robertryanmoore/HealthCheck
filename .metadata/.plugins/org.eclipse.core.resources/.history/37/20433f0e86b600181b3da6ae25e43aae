@@ -1,0 +1,26 @@
+import java.util.*;
+
+public class TimerDemo {
+   public static void main(String[] args) {
+      // creating timer task, timer
+      TimerTask tasknew = new TimerTask() {
+		
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
+	
+      Timer timer = new Timer();
+
+      // scheduling the task
+      timer.schedule(tasknew, new Date());      
+   }
+   // this method performs the task
+   
+   public void run() {
+      System.out.println("working on");      
+   }    
+}

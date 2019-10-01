@@ -1,0 +1,67 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.Charset;
+
+import javax.xml.registry.infomodel.EmailAddress;
+import javax.xml.rpc.ServiceException;
+
+import com.google.common.util.concurrent.Service;
+import com.sun.corba.se.impl.ior.ByteBuffer;
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+
+import microsoft.exchange.webservices.data.core.ExchangeService;
+import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
+import microsoft.exchange.webservices.data.core.response.FindItemResponse;
+import microsoft.exchange.webservices.data.core.service.item.EmailMessage;
+import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
+import microsoft.exchange.webservices.data.credential.WebCredentials;
+import microsoft.exchange.webservices.data.property.complex.ItemId;
+import microsoft.exchange.webservices.data.property.complex.MessageBody;
+
+public class MSExchangeEmailService {
+  
+	
+	
+	public static void main(String[] args){
+		
+		System.out.println("working");
+		
+		ExchangeService mailService = new ExchangeService(ExchangeVersion.valueOf("15.20.1164.16"));
+		ExchangeCredentials credentials = new WebCredentials("rmoore@oldmutual.com", "SeptPass!8");
+		System.setProperty("javax.net.debug", "ssl");
+		
+		mailService.setCredentials(credentials);
+		URI url;
+		try {
+			url = new URI("https://outlook.office365.com/mapi/emsmdb/?MailboxId=11b44c4b-b344-48bd-ba2a-a9ba60385deb@oldmutual.com");
+			mailService.setUrl(url);
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		try {
+			EmailMessage em = new EmailMessage(mailService);
+			microsoft.exchange.webservices.data.property.complex.EmailAddress me = new microsoft.exchange.webservices.data.property.complex.EmailAddress();
+			me.setAddress("rmoore@oldmutual.com");
+			em.setFrom(me);
+			em.setSubject("QA health check");
+			em.setBody(new MessageBody("This is a test email"));
+			em.getToRecipients().add(me);
+			em.send();
+			
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		
+        }
+}
