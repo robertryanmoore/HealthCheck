@@ -59,16 +59,13 @@ public class Chrome implements Job{
 		List<String> message = new ArrayList<String>();
 
 		// Tell the program where to find the Chrome driver
-		System.setProperty("webdriver.chrome.driver", "../chromedriver.exe");
-		//C:/Code/Java/selenium-java-3.14.0/chromedriver.exe
-		
+		System.setProperty("webdriver.chrome.driver", "../chromedriver.exe");		
 		
 		WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments("--start-maximized"));
 		
 		// load up the site
 		driver.get(
-				"https://secure.dcc.oldmutual.co.za"  //qa url removed for security
-				
+				"url"  //url removed for security
 				);
 
 		// Login
@@ -81,7 +78,6 @@ public class Chrome implements Job{
 														
 		} catch (Exception e) {
 			message.add("Unable to login");
-			//JOptionPane.showMessageDialog(null, message.get(message.size()), "", 0);
 			joptionPaneBulder(message.get(message.size()-1), "", popups);
 			logger.log(message);
 			driver.close();
@@ -98,7 +94,7 @@ public class Chrome implements Job{
 		// try to click on myport
 		try {
 			// goes to myport
-			((JavascriptExecutor) driver).executeScript("arguments[0].click();",driver.findElement(By.cssSelector("a[href='/home/gotomyportfolio']")));
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();",driver.findElement(By.cssSelector("a[href='removed for security']")));
 
 		} catch (Exception e) {
 			message.add("Unable to click through to MyPortfolio");
@@ -134,21 +130,17 @@ public class Chrome implements Job{
 			if (!driver.getPageSource().contains("Your Car & Home Insurance")) {
 				pageChanged = true;
 			}
-
 		}
 			
 		if (driver.getPageSource().contains("You have been <strong>logged out</strong>")) {
 			
 			message.add("IAM QA health check completed successfully"); 
-			//JOptionPane.showMessageDialog(null, message.get(message.size()-1), "", 1);
 			joptionPaneBulder(message.get(message.size()-1), "", popups);
 		} else {
 		
 			message.add("Error logging out");
-		//	JOptionPane.showMessageDialog(null, message.get(message.size()-1), "", 0);
 			joptionPaneBulder(message.get(message.size()-1), "Error", popups);
 			System.out.println(message.get(message.size()-1));
-		
 		}
 
 		logger.log(message);
