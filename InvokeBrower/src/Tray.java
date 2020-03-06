@@ -93,7 +93,6 @@ public class Tray {
 
 				sched.start();
 
-				// define the job and tie it to our HelloJob class
 				JobDetail job = newJob(Chrome.class).withIdentity("myJob", "group1").build();
 				
 				//set up triggers 
