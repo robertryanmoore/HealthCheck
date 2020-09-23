@@ -1,0 +1,1 @@
+During my time at Old Mutual I noticed a need for CSV files to frequently be merged and that this was causing the team a lot of frustration so I took it upon myself to develop a tool to deal with that issue. Please click the link for more details and the source code.
